@@ -49,12 +49,12 @@ function LoginPage() {
                     dispatch(loginUser(body))
                         .then((response) => {
                             if (response.payload.loginSuccess) {
-                                window.localStorage.setItem(
+                                localStorage.setItem(
                                     "userId",
                                     response.payload.userId
                                 );
                                 if (rememberMe) {
-                                    window.localStorage.setItem(
+                                    localStorage.setItem(
                                         "rememberMe",
                                         values.id
                                     );

@@ -10,6 +10,7 @@ import Footer from "./components/views/Footer/Footer";
 import { Suspense } from "react";
 import VideoUploadPage from "./components/views/VideoUploadPage/VideoUploadPage";
 import VideoDetailPage from "./components/views/VideoDetailPage/VideoDetailPage";
+import SubscriptionPage from "./components/views/SubscriptionPage/SubscriptionPage";
 
 function App() {
     return (
@@ -32,6 +33,10 @@ function App() {
                     <Route
                         path="/video/:videoId"
                         element={Auth(VideoDetailPage, null)}
+                    />
+                    <Route
+                        path="/subscription"
+                        element={Auth(SubscriptionPage, null)}
                     />
                 </Routes>
             </div>

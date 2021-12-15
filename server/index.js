@@ -29,6 +29,8 @@ app.use(cookieParser());
 
 app.use("/api/users", require("./routes/users"));
 app.use("/api/video", require("./routes/video"));
+app.use("/api/subscribe", require("./routes/subscribe"));
+
 app.use("/uploads", express.static("uploads"));
 
 // 배포 시 참조 할 React 클라이언트 빌드 경로

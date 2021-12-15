@@ -150,6 +150,11 @@ function VideoUploadPage() {
                             <img
                                 src={`http://localhost:5000/${thumbnailPath}`}
                                 alt="thumbnail"
+                                style={{
+                                    width: "300px",
+                                    height: "240px",
+                                    objectFit: "cover",
+                                }}
                             />
                         </div>
                     )}

@@ -6,17 +6,24 @@ import React, { useEffect, useState } from "react";
 const { Title } = Typography;
 const { Meta } = Card;
 
-function LandingPage() {
+function SubscriptionPage() {
     const [video, setVideo] = useState([]);
+
     useEffect(() => {
-        axios.get("/api/video/getVideos").then((response) => {
-            if (response.data.success) {
-                console.log(response.data.videos);
-                setVideo(response.data.videos);
-            } else {
-                alert("비디오 가져오기를 실패했습니다.");
-            }
-        });
+        const subscriptionVariables = {
+            userFrom: localStorage.getItem("userId"),
+        };
+
+        axios
+            .post("/api/video/getSubscriptionVideos", subscriptionVariables)
+            .then((response) => {
+                if (response.data.success) {
+                    console.log(response.data.videos);
+                    setVideo(response.data.videos);
+                } else {
+                    alert("비디오 가져오기를 실패했습니다.");
+                }
+            });
     }, []);
 
     const renderCards = video.map((video, index) => {
@@ -79,4 +86,4 @@ function LandingPage() {
     );
 }
 
-export default LandingPage;
+export default SubscriptionPage;

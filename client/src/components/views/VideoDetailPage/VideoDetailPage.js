@@ -3,6 +3,7 @@ import { Row, Col, List, Avatar } from "antd";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import SideVideo from "./Sections/SideVideo";
+import Subscribe from "./Sections/Subscribe";
 
 function VideoDetailPage() {
     const { videoId } = useParams();
@@ -28,12 +29,19 @@ function VideoDetailPage() {
             <Col lg={18} xs={24}>
                 <div style={{ width: "100%", padding: "3rem 4rem" }}>
                     <video
-                        style={{ width: "100%" }}
+                        style={{ width: "100%", maxHeight: "480px" }}
                         src={`http://localhost:5000/${videoDetail.filePath}`}
                         controls
                     />
 
-                    <List.Item actions>
+                    <List.Item
+                        actions={[
+                            <Subscribe
+                                userTo={videoDetail.writer._id}
+                                userFrom={localStorage.getItem("userId")}
+                            />,
+                        ]}
+                    >
                         <List.Item.Meta
                             avatar={<Avatar src={videoDetail.writer.image} />}
                             title={videoDetail.writer.name}

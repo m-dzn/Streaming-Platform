@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Avatar, Comment, Input } from "antd";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import LikeDislikes from "./LikeDislikes";
 
 const { TextArea } = Input;
 
 function SingleComment({ comment, refreshFunction, videoId }) {
     const user = useSelector((state) => state.user);
+    const userId = localStorage.getItem("userId");
 
     const [openReply, setOpenReply] = useState(false);
     const [commentValue, setCommentValue] = useState("");
@@ -43,6 +45,7 @@ function SingleComment({ comment, refreshFunction, videoId }) {
     };
 
     const actions = [
+        <LikeDislikes userId={userId} commentId={comment._id} />,
         <span onClick={onClickReplyOpen} key="comment-basic-reply-to">
             Reply to
         </span>,

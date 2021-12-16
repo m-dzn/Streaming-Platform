@@ -5,9 +5,11 @@ import { useParams } from "react-router-dom";
 import SideVideo from "./Sections/SideVideo";
 import Subscribe from "./Sections/Subscribe";
 import Comment from "./Sections/Comment";
+import LikeDislikes from "./Sections/LikeDislikes";
 
 function VideoDetailPage() {
     const { videoId } = useParams();
+    const userId = localStorage.getItem("userId");
     const variable = { videoId };
 
     const [videoDetail, setVideoDetail] = useState([]);
@@ -39,12 +41,8 @@ function VideoDetailPage() {
 
     if (!videoDetail.writer) return <div>...loading</div>;
 
-    const subscribeButton = videoDetail.writer._id !==
-        localStorage.getItem("userId") && (
-        <Subscribe
-            userTo={videoDetail.writer._id}
-            userFrom={localStorage.getItem("userId")}
-        />
+    const subscribeButton = videoDetail.writer._id !== userId && (
+        <Subscribe userTo={videoDetail.writer._id} userFrom={userId} />
     );
 
     return (
@@ -52,12 +50,21 @@ function VideoDetailPage() {
             <Col lg={18} xs={24}>
                 <div style={{ width: "100%", padding: "3rem 4rem" }}>
                     <video
-                        style={{ width: "100%", maxHeight: "480px" }}
+                        style={{ width: "100%" }}
                         src={`http://localhost:5000/${videoDetail.filePath}`}
                         controls
                     />
 
-                    <List.Item actions={[subscribeButton]}>
+                    <List.Item
+                        actions={[
+                            <LikeDislikes
+                                video
+                                userId={userId}
+                                videoId={videoId}
+                            />,
+                            subscribeButton,
+                        ]}
+                    >
                         <List.Item.Meta
                             avatar={<Avatar src={videoDetail.writer.image} />}
                             title={videoDetail.writer.name}

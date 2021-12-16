@@ -44,7 +44,7 @@ function Comment({ commentList, refreshFunction, videoId }) {
                 commentList.map(
                     (comment, index) =>
                         !comment.responseTo && (
-                            <>
+                            <div key={comment._id}>
                                 <SingleComment
                                     comment={comment}
                                     refreshFunction={refreshFunction}
@@ -56,7 +56,7 @@ function Comment({ commentList, refreshFunction, videoId }) {
                                     refreshFunction={refreshFunction}
                                     videoId={videoId}
                                 />
-                            </>
+                            </div>
                         )
                 )}
 

@@ -4,12 +4,14 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import SideVideo from "./Sections/SideVideo";
 import Subscribe from "./Sections/Subscribe";
+import Comment from "./Sections/Comment";
 
 function VideoDetailPage() {
     const { videoId } = useParams();
     const variable = { videoId };
 
     const [videoDetail, setVideoDetail] = useState([]);
+    const [comments, setComments] = useState([]);
 
     useEffect(() => {
         axios.post("/api/video/getVideoDetail", variable).then((response) => {
@@ -17,10 +19,23 @@ function VideoDetailPage() {
                 console.log(response.data);
                 setVideoDetail(response.data.videoDetail);
             } else {
-                alert("비디오 정보를 가져오길 실패했습니다.");
+                alert("비디오 정보를 가져오는 데 실패했습니다.");
+            }
+        });
+
+        axios.get("/api/comment/getComments", variable).then((response) => {
+            if (response.data.success) {
+                setComments(response.data.comments);
+                console.log(response.data.comments);
+            } else {
+                alert("댓글 정보를 가져오는 데 실패했습니다.");
             }
         });
     }, []);
+
+    const refreshFunction = (newComment) => {
+        setComments(comments.concat(newComment));
+    };
 
     if (!videoDetail.writer) return <div>...loading</div>;
 
@@ -49,6 +64,12 @@ function VideoDetailPage() {
                             description={videoDetail.description}
                         />
                     </List.Item>
+
+                    <Comment
+                        commentList={comments}
+                        refreshFunction={refreshFunction}
+                        videoId={videoId}
+                    />
                 </div>
             </Col>
             <Col lg={6} xs={24}>

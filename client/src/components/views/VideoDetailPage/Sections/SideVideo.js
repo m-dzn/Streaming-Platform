@@ -67,9 +67,9 @@ function SideVideo() {
     });
 
     return (
-        <React.Fragment>
+        <>
             <div style={{ marginTop: "3rem" }}>{renderSideVideo}</div>
-        </React.Fragment>
+        </>
     );
 }
 
